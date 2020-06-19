@@ -1,33 +1,35 @@
 import Head from 'next/head'
 import { useEffect } from 'react'
-import { useAppContext } from '../components/contexts/AppContext';
+import { useAppContext } from '../contexts/AppContext';
 
 export const Home = () => {
-  const { isAuthenticated, setAuthenticated } = useAppContext();
+  const { variableState, setVariableState } = useAppContext();
 
+  const getInitialProps = async () => {
+    let req = await fetch('https://api.audioboom.com/channels/recommended')
+    let { body: channels } = await req.json()
+    return { channels }
+  }
 
   //ComponentDidMouunt
-  React.useEffect(() => {
-    console.log('NOOOO');
-    setAuthenticated(true);
-    console.log(isAuthenticated);
-   }, [isAuthenticated] );
+  useEffect(() => {
+   }, [variableState] );
 
   
   return (
     <div className="container">
       <Head>
-        <title>PodCasts with Context and Hooks</title>
+        <title>Testing Next.JS with Context and Hooks</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
         <h1 className="title">
-          PODCAST APP {`${isAuthenticated}`}
+          CONTEXT APP {`${variableState}`}
         </h1>
 
         <p className="description">
-          Get Started with LanguageContext
+          Get Started with AppContext API, using ContextAPI.
         </p>
       </main>
 

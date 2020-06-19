@@ -1,15 +1,27 @@
 import App, { Container } from 'next/app';
-import { AppContextProvider } from "../components/contexts/AppContext";
+import { AppContextProvider } from "../contexts/AppContext";
 
-class MyApp extends App {
-  render() {
-    const { Component, pageProps } = this.props;
-    return (
-      <AppContextProvider>
-        <Component {...pageProps} />
-      </AppContextProvider>
-    );
-  }
+const MyApp = ({ Component, pageProps }) => {
+  return (
+    <AppContextProvider>
+      <Component {...pageProps} />
+    </AppContextProvider>
+  );
+}
+//  {
+//   render() {
+//     const { Component, pageProps } = this.props;
+//     return (
+//       <AppContextProvider>
+//         <Component {...pageProps} />
+//       </AppContextProvider>
+//     );
+//   }
+// }
+
+MyApp.getInitialProps = async (appContext) => {
+  const appProps = await App.getInitialProps(appContext)
+  return { ...appProps }
 }
 
 export default MyApp;
